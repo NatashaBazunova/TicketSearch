@@ -21,7 +21,6 @@ class TicketManagerTest {
     public void shouldFindByUfa(){
         manager.add(first);
         manager.add(second);
-        manager.add(fourth);
         manager.add(fifth);
 
         Ticket[] expected = new Ticket[] {first, fifth, second};
@@ -36,11 +35,34 @@ class TicketManagerTest {
     public void shouldFindByKZN() {
         manager.add(third);
         manager.add(fourth);
-        manager.add(fifth);
         manager.add(sixth);
         Ticket[] expected = new Ticket[] {sixth, fourth, third};
         Ticket[] actual = manager.findByAll("KZN", "DME");
         Arrays.sort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindByDME() {
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        Ticket[] expected = new Ticket[] {sixth, fourth, third, first, fifth, second};
+        Ticket[] actual = manager.findByAll("DME", "");
+        Arrays.sort(actual);
+        assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void shouldFindNone() {
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(sixth);
+        Ticket[] expected = new Ticket[] {};
+        Ticket[] actual = manager.findByAll("DME", "KZN");
+
         assertArrayEquals(expected, actual);
     }
 

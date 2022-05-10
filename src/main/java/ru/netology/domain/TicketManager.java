@@ -14,8 +14,7 @@ public class TicketManager {
    public Ticket[] findByAll(String from, String to) {
         Ticket[] result = new Ticket[0];
         for (Ticket ticket : repository.findAll()) {
-            if (matchesFrom(ticket, from)) {
-                if (matchesTo(ticket, to)) {
+            if (matches(ticket, from, to)) {
                     int length = result.length + 1;
                     Ticket[] tmp = new Ticket[length];
                     System.arraycopy(result, 0, tmp, 0, result.length);
@@ -24,14 +23,20 @@ public class TicketManager {
                     result = tmp;
                 }
             }
+       return result;
         }
-        return result;
-   }
-   public boolean matchesFrom(Ticket ticket, String search) {
-        return ticket.getFrom().contains(search);
-   }
-   public boolean matchesTo(Ticket ticket,String search) {
-        return ticket.getTo().contains(search);
-   }
-//добавить остальное по такому же принципу
+
+
+    public boolean matches(Ticket ticket, String from, String to) {
+        if (ticket.getFrom().contains(from)) {
+            return true;
+        }
+        if (ticket.getTo().contains(to)) {
+            return true;
+        }
+        return false;
+    }
+
 }
+
+
